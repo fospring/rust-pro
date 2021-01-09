@@ -127,38 +127,46 @@ fn main() {
     // Create the runtime
     let rt = Runtime::new().unwrap();
 
-    // Spawn a future onto the runtime
-    let f = async {
-        println!("now running on a worker thread");
+    // // Spawn a future onto the runtime
+    // let f = async {
+    //     println!("now running on a worker thread");
         
-    };
-    let rc_ctx = VCContext::new_warp_future(f.boxed());
-    rt.spawn(Box::pin(rc_ctx));
+    // };
+    // let rc_ctx = VCContext::new_warp_future(f.boxed());
+    // rt.spawn(Box::pin(rc_ctx));
 
-    let f = async {
-        println!("now running on a worker thread again");
+    // let f = async {
+    //     println!("now running on a worker thread again");
         
-    };
-    let rc_ctx = VCContext::new_warp_future(f.boxed());
-    rt.spawn(Box::pin(rc_ctx));
+    // };
+    // let rc_ctx = VCContext::new_warp_future(f.boxed());
+    // rt.spawn(Box::pin(rc_ctx));
 
-    let f = PendingOnce{is_ready:false}.boxed();
-    let rc_ctx = VCContext::new_warp_future(f.boxed());
-    rt.spawn(Box::pin(rc_ctx));
-    println!("end2\n");
+    // let f = PendingOnce{is_ready:false}.boxed();
+    // let rc_ctx = VCContext::new_warp_future(f.boxed());
+    // rt.spawn(Box::pin(rc_ctx));
+    // println!("end2\n");
 
-    let f = PendingOnce{is_ready:false}.boxed();
-    let rc_ctx = VCContext::new_warp_future(f.boxed());
-    rt.spawn(Box::pin(rc_ctx));
-    println!("end3\n");
+    // let f = PendingOnce{is_ready:false}.boxed();
+    // let rc_ctx = VCContext::new_warp_future(f.boxed());
+    // rt.spawn(Box::pin(rc_ctx));
+    // println!("end3\n");
 
-    let f = future::pending::<()>().boxed();
-    let rc_ctx = VCContext::new_warp_future(f.boxed());
-    rt.spawn(Box::pin(rc_ctx));
-    println!("end4\n");
+    // let f = future::pending::<()>().boxed();
+    // let rc_ctx = VCContext::new_warp_future(f.boxed());
+    // rt.spawn(Box::pin(rc_ctx));
+    // println!("end4\n");
 
     let f = async {
         // Wait for a `tokio` 0.2 `Delay`...
+        println!("100 ms sleep start");
+        tokio::time::sleep(Duration::from_millis(100)).await;
+        println!("100 ms have elapsed");
+
+        println!("100 ms sleep start");
+        tokio::time::sleep(Duration::from_millis(100)).await;
+        println!("100 ms have elapsed");
+
         println!("100 ms sleep start");
         tokio::time::sleep(Duration::from_millis(100)).await;
         println!("100 ms have elapsed");
