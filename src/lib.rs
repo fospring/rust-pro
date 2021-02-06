@@ -1,5 +1,8 @@
+#![feature(box_syntax)]
+#![feature(allocator_api)]
 pub mod pin_data;
 pub mod pointer_owner_ship;
+pub mod mock_arc;
 
 #[feature(dyn_trait)]
 use std::mem;
