@@ -8,9 +8,7 @@ use std::{
         AtomicUsize,
         Ordering::{Relaxed, Release},
     },
-    sync::Arc,
     thread,
-    time::Duration,
 };
 
 struct MockArc<T> {
@@ -78,18 +76,12 @@ impl<T: Debug> Debug for MockArc<T> {
 
 #[test]
 fn test_main() {
-    let foo = Arc::new(vec![0]);
-    let bar = Arc::clone(&foo);
-
-    let foo2 = MockArc::new(vec![0]);
-    let bar2 = MockArc::clone(&foo2);
+    let foo = MockArc::new(vec![0]);
+    let bar = MockArc::clone(&foo);
     let handler = thread::spawn(move || {
-        thread::sleep(Duration::from_millis(20));
         println!("bar {:?}", *bar);
-        println!("bar2 {:?}", *bar2);
     });
 
     println!("foo {:?}", foo);
-    println!("foo2 {:?}", foo2);
     handler.join().ok();
 }
