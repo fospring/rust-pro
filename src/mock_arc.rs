@@ -1,15 +1,17 @@
-use std::boxed::Box;
-use std::fmt::{self, Debug, Formatter};
-use std::marker::PhantomData;
-use std::ops::Deref;
-use std::ptr::{self, NonNull};
-use std::sync::atomic::{
-    AtomicUsize,
-    Ordering::{Relaxed, Release},
+use std::{
+    boxed::Box,
+    fmt::{self, Debug, Formatter},
+    marker::PhantomData,
+    ops::Deref,
+    ptr::{self, NonNull},
+    sync::atomic::{
+        AtomicUsize,
+        Ordering::{Relaxed, Release},
+    },
+    sync::Arc,
+    thread,
+    time::Duration,
 };
-use std::sync::Arc;
-use std::thread;
-use std::time::Duration;
 
 struct MockArc<T> {
     ptr: NonNull<MockDataInner<T>>,

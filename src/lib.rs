@@ -1,10 +1,10 @@
 #![feature(box_syntax)]
 #![feature(allocator_api)]
+pub mod future_poll;
+pub mod mock_arc;
 pub mod pin_data;
 pub mod pointer_owner_ship;
-pub mod mock_arc;
 pub mod trait_obj;
-pub mod future_poll;
 
 use std::time::{Duration, Instant};
 use std::{thread, time};
@@ -37,4 +37,3 @@ mod test {
         println!("end1\n");
     }
 }
-

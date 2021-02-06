@@ -1,4 +1,3 @@
-
 use futures::future::{self, Future, FutureExt};
 use futures::task::{Context, Poll};
 use std::pin::Pin;
@@ -7,8 +6,8 @@ struct VCContext<F> {
 }
 
 impl<F> Future for VCContext<F>
-    where
-        F: std::marker::Unpin + Future<Output = ()>,
+where
+    F: std::marker::Unpin + Future<Output = ()>,
 {
     type Output = F::Output;
 
@@ -22,14 +21,13 @@ impl<F> Future for VCContext<F>
 }
 
 impl<F> VCContext<F>
-    where
-        F: std::marker::Unpin + Future<Output = ()>,
+where
+    F: std::marker::Unpin + Future<Output = ()>,
 {
     fn new_warp_future(future: F) -> impl Future<Output = ()> {
         VCContext { future }
     }
 }
-
 
 #[allow(missing_debug_implementations)]
 #[doc(hidden)]
@@ -65,24 +63,22 @@ mod test {
         // Spawn a future onto the runtime
         let f = async {
             println!("now running on a worker thread");
-
         };
         let rc_ctx = VCContext::new_warp_future(f.boxed());
         rt.spawn(Box::pin(rc_ctx));
 
         let f = async {
             println!("now running on a worker thread again");
-
         };
         let rc_ctx = VCContext::new_warp_future(f.boxed());
         rt.spawn(Box::pin(rc_ctx));
 
-        let f = PendingOnce{is_ready:false}.boxed();
+        let f = PendingOnce { is_ready: false }.boxed();
         let rc_ctx = VCContext::new_warp_future(f.boxed());
         rt.spawn(Box::pin(rc_ctx));
         println!("end2\n");
 
-        let f = PendingOnce{is_ready:false}.boxed();
+        let f = PendingOnce { is_ready: false }.boxed();
         let rc_ctx = VCContext::new_warp_future(f.boxed());
         rt.spawn(Box::pin(rc_ctx));
         println!("end3\n");
@@ -117,4 +113,3 @@ mod test {
         println!("end last\n");
     }
 }
-

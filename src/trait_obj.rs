@@ -1,4 +1,3 @@
-
 #[feature(dyn_trait)]
 use std::mem;
 trait Bird {
