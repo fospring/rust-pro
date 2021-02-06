@@ -25,10 +25,10 @@ struct MockDataInner<T> {
 
 impl<T> MockArc<T> {
     fn new(data: T) -> Self {
-        let inner = box MockDataInner {
+        let inner = Box::new(MockDataInner {
             rc: AtomicUsize::new(1),
             data: data,
-        };
+        });
         MockArc {
             ptr: Box::leak(inner).into(),
             phantom: PhantomData,

@@ -1,5 +1,3 @@
-#![feature(box_syntax)]
-#![feature(allocator_api)]
 pub mod arc_mvp;
 pub mod future_poll;
 pub mod pin_data;
