@@ -1,5 +1,6 @@
 use std::boxed::Box;
 use std::fmt::{self, Debug, Formatter};
+use std::marker::PhantomData;
 use std::ops::Deref;
 use std::ptr::{self, NonNull};
 use std::sync::atomic::{
@@ -12,6 +13,7 @@ use std::time::Duration;
 
 struct MockArc<T> {
     ptr: NonNull<MockDataInner<T>>,
+    phantom: PhantomData<MockDataInner<T>>,
 }
 
 unsafe impl<T: Sync> Send for MockArc<T> {}
@@ -30,6 +32,7 @@ impl<T> MockArc<T> {
         };
         MockArc {
             ptr: Box::leak(inner).into(),
+            phantom: PhantomData,
         }
     }
     fn inner(&self) -> &MockDataInner<T> {
@@ -40,7 +43,10 @@ impl<T> MockArc<T> {
 impl<T> Clone for MockArc<T> {
     fn clone(&self) -> MockArc<T> {
         self.inner().rc.fetch_add(1, Relaxed);
-        MockArc { ptr: self.ptr }
+        MockArc {
+            ptr: self.ptr,
+            phantom: PhantomData,
+        }
     }
 }
 
