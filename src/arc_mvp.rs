@@ -17,7 +17,6 @@ struct MockArc<T> {
 }
 
 unsafe impl<T: Sync> Send for MockArc<T> {}
-unsafe impl<T: Sync> Sync for MockArc<T> {}
 
 struct MockDataInner<T> {
     rc: AtomicUsize,

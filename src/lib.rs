@@ -1,7 +1,7 @@
 #![feature(box_syntax)]
 #![feature(allocator_api)]
+pub mod arc_mvp;
 pub mod future_poll;
-pub mod mock_arc;
 pub mod pin_data;
 pub mod pointer_owner_ship;
 pub mod trait_obj;
